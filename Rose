@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Rose Day 🌹</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts -->
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Satoshi', sans-serif;
+      background: #0c0a09;
+      color: #e5e5e5;
+      overflow-x: hidden;
+    }
+
+    /* Aurora Background */
+    .aurora {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, hsla(333,70%,55%,.4), transparent 40%),
+        radial-gradient(circle at 80% 30%, hsla(282,82%,54%,.3), transparent 45%),
+        radial-gradient(circle at 50% 80%, hsla(210,89%,60%,.3), transparent 50%),
+        radial-gradient(circle at 70% 70%, hsla(35,90%,60%,.3), transparent 45%);
+      animation: aurora 18s ease-in-out infinite alternate;
+      z-index: -2;
+    }
+
+    @keyframes aurora {
+      0% { filter: blur(40px) hue-rotate(0deg); }
+      100% { filter: blur(60px) hue-rotate(30deg); }
+    }
+
+    canvas#bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+    }
+
+    /* Glass Card */
+    .glass {
+      background: rgba(15, 15, 15, 0.6);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 1.5rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+
+    h1, h2 {
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(90deg, #ffd1dc, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #ff4d6d, #ff758f);
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 0 25px rgba(255,77,109,0.5);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 40px rgba(255,77,109,0.9);
+    }
+
+    .btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    /* Progress Bar */
+    .progress-track {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 6px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 999px;
+      z-index: 50;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff4d6d, #ff8fa3);
+      border-radius: 999px;
+      transition: width 0.6s ease;
+    }
+
+    /* Polaroid */
+    .polaroid {
+      background: white;
+      padding: 1rem;
+      padding-bottom: 2.5rem;
+      border-radius: 0.5rem;
+      transform: rotate(-4deg);
+      transition: transform 0.3s ease;
+    }
+
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.05);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="aurora"></div>
+  <canvas id="bg"></canvas>
+
+  <!-- Progress -->
+  <div class="progress-track">
+    <div class="progress-bar" id="progress"></div>
+  </div>
+
+  <main class="min-h-screen flex items-center justify-center px-4">
+    <div class="w-full max-w-3xl space-y-10">
+
+      <!-- STEP 1 -->
+      <section class="step active glass p-10 text-center">
+        <div class="text-6xl animate-pulse mb-6">💖</div>
+        <h1 class="text-4xl mb-4">Hey Beautiful,</h1>
+        <p class="mb-8">I built a little world for you, just to bring a smile to your face on this special day.</p>
+        <button class="btn next">Let's Begin</button>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step glass p-10 text-center">
+        <div class="text-6xl mb-6">🎉</div>
+        <h1 class="text-4xl mb-4">Happy Rose Day!</h1>
+        <p class="mb-8">Another year of you making the world brighter. Your existence is a gift, and I'm so lucky to witness it.</p>
+        <button class="btn next">There's more...</button>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step glass p-10">
+        <h2 class="text-3xl mb-6 text-center">A Few Things I Adore About You</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div class="glass p-6 md:col-span-2">
+            <h3 class="font-bold mb-2">✨ Your Unmatched Kindness</h3>
+            <p>The genuine warmth you show to everyone is something truly rare and beautiful.</p>
+          </div>
+          <div class="glass p-6">
+            <h3 class="font-bold mb-2">😊 That Smile</h3>
+            <p>It's a work of art.</p>
+          </div>
+          <div class="glass p-6 md:col-span-2">
+            <h3 class="font-bold mb-2">🌟 Your Radiant Spirit</h3>
+            <p>Your passion for life is infectious. Being around you makes everything feel more exciting and possible.</p>
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn next">Remember this?</button>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="step glass p-10 text-center">
+        <h2 class="text-3xl mb-6">That One Time...</h2>
+        <div class="flex justify-center mb-6">
+          <div class="polaroid">
+            <img src="https://share.google/A8cx8YONmtUhVQByB" class="rounded" />
+            <p class="text-gray-600 mt-2 text-sm">Our favorite memory.</p>
+          </div>
+        </div>
+        <p class="mb-8">Every moment with you feels like a scene from a movie I'd watch on repeat.</p>
+        <button class="btn next">One last thing...</button>
+      </section>
+
+      <!-- STEP 5 -->
+      <section class="step glass p-10 text-center">
+        <div class="text-6xl mb-6">🌹</div>
+        <h1 class="text-4xl mb-4">My Wish For You</h1>
+        <p class="mb-6">
+          They say a rose is the symbol of beauty, but to me, you are far more beautiful than any flower could ever be.
+          Your strength, your soul, and that smile are what I fell in love with.
+        </p>
+        <p id="finalText" class="text-2xl font-bold opacity-0 mt-6">Happy Rose Day, my love! 💖</p>
+        <button class="btn" id="celebrate">Celebrate!</button>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    /* STEP LOGIC */
+    const steps = document.querySelectorAll('.step');
+    const progress = document.getElementById('progress');
+    let current = 0;
+
+    function showStep(index) {
+      steps.forEach(s => s.classList.remove('active'));
+      steps[index].classList.add('active');
+      progress.style.width = ((index + 1) / steps.length) * 100 + '%';
+
+      gsap.fromTo(steps[index], { opacity: 0, y: 40, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out' });
+    }
+
+    document.querySelectorAll('.next').forEach(btn => {
+      btn.addEventListener('click', () => {
+        current++;
+        showStep(current);
+      });
+    });
+
+    /* THREE.JS ROSES */
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 100);
+    camera.position.z = 15;
+
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg'), alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const light = new THREE.PointLight(0xff88aa, 1.5);
+    light.position.set(10, 10, 10);
+    scene.add(light);
+
+    const roses = [];
+    const geo = new THREE.SphereGeometry(0.4, 16, 16);
+    const mat = new THREE.MeshStandardMaterial({ color: 0xff4d6d, roughness: 0.3, metalness: 0.6 });
+
+    for (let i = 0; i < 25; i++) {
+      const rose = new THREE.Mesh(geo, mat);
+      rose.position.set(
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 10
+      );
+      rose.rotationSpeed = Math.random() * 0.01;
+      scene.add(rose);
+      roses.push(rose);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      roses.forEach(r => {
+        r.rotation.y += r.rotationSpeed;
+        r.position.y += Math.sin(Date.now() * 0.001 + r.position.x) * 0.001;
+      });
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    /* CELEBRATE */
+    document.getElementById('celebrate').addEventListener('click', () => {
+      gsap.to('#celebrate', { opacity: 0, duration: 0.4, onComplete: () => {
+        document.getElementById('celebrate').style.display = 'none';
+      }});
+
+      gsap.to('#finalText', { opacity: 1, y: -10, duration: 1 });
+
+      confetti({
+        particleCount: 200,
+        spread: 120,
+        origin: { y: 1 }
+      });
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 150,
+          spread: 80,
+          emojis: ['💖','🌹','✨'],
+          origin: { y: 0.6 }
+        });
+      }, 800);
+
+      roses.forEach(r => {
+        gsap.to(r.position, { y: r.position.y + 20, duration: 3 });
+        gsap.to(r.material, { opacity: 0, duration: 3 });
+      });
+    });
+  </script>
+</body>
+</html>
